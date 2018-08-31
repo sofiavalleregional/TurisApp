@@ -3,6 +3,7 @@ package com.worldskills.turisapp.activities;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
@@ -19,12 +20,19 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.maps.android.PolyUtil;
 import com.worldskills.turisapp.R;
 import com.worldskills.turisapp.modelos.ItemLugar;
 import com.worldskills.turisapp.servicios.ServicioWeb;
 
+import java.io.IOException;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -130,14 +138,23 @@ public class MapaActivity extends FragmentActivity implements OnMapReadyCallback
             ItemLugar lugar=lugares.get(itemPrecionado);
             LatLngBounds.Builder builders=new LatLngBounds.Builder();
             miPosicion();
+            destino=new LatLng(lugar.getLatitud(),lugar.getLongitud());
 
             mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)).title("Mi pocision")
             .position(origen));
 
             mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)).title(lugar.getNombre())
-            .position(new LatLng(lugar.getLatitud(),lugar.getLongitud())));
+            .position(destino));
 
             //aqui
+
+            builders.include(origen);
+            builders.include(destino);
+
+            mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builders.build(),0));
+
+
+
 
 
     }
@@ -159,6 +176,41 @@ public class MapaActivity extends FragmentActivity implements OnMapReadyCallback
 
         if(miLocation!=null) origen=new LatLng(miLocation.getLatitude(),miLocation.getLongitude());
         else Toast.makeText(this, "Sin conexion para la posicion", Toast.LENGTH_SHORT).show();
+    }
+    public void creaRuta(){
+        String oring=origen.latitude+","+origen.longitude;
+        String desti=destino.latitude+","+destino.longitude;
+
+        Retrofit retrofit=new Retrofit.Builder().baseUrl(getResources().getString(R.string.base_url_rutas))
+                .addConverterFactory(GsonConverterFactory.create()).build();
+
+        ServicioWeb servicio=retrofit.create(ServicioWeb.class);
+
+        Call<ResponseBody> res=servicio.getRutas(oring,desti);
+
+        res.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                JsonObject json=null;
+
+                try {
+                    json=new Gson().fromJson(response.body().string(), JsonElement.class).getAsJsonObject();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                String points=json.get("routes").getAsJsonArray().get(0).getAsJsonObject()
+                        .get("overview_polyline").getAsJsonObject()
+                        .get("points").getAsString();
+
+                mMap.addPolyline(new PolylineOptions().color(Color.BLACK).addAll(PolyUtil.decode(points)));
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 
 
