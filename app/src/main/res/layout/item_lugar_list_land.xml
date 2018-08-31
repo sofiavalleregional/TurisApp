@@ -21,7 +21,8 @@
                 android:id="@+id/item_lugar_imagen"
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
-                android:background="@color/colorPrimaryDark"/>
+                android:background="@android:color/black"
+                android:src="@drawable/logo"/>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -29,36 +30,50 @@
                 />
 
 
+
+        </android.support.constraint.ConstraintLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:background="@android:color/black"
+            android:layout_height="match_parent">
+            <TextView
+                android:fontFamily="@font/cambriaz"
+                android:id="@+id/item_lugar_nombre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:background="@android:color/black"
+                android:text="Nombre"/>
+            <TextView
+
+                android:fontFamily="@font/cambriai"
+                android:id="@+id/item_lugar_descripcion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@android:color/white"
+                android:text="descripcion"
+
+                />
+
             <TextView
                 android:fontFamily="@font/cambriai"
                 android:id="@+id/item_lugar_ubicacion"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
-                android:layout_margin="10dp"
+                android:textSize="12sp"
                 android:gravity="bottom"
                 android:text="Nombre"/>
-        </android.support.constraint.ConstraintLayout>
-        <TextView
-            android:fontFamily="@font/cambriaz"
-            android:id="@+id/item_lugar_nombre"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textColor="@android:color/white"
-            android:gravity="center"
-            android:background="@android:color/black"
-            android:text="Nombre"/>
 
-        <TextView
-            android:visibility="invisible"
-            android:fontFamily="@font/cambriai"
-            android:id="@+id/item_lugar_descripcion"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:textColor="@android:color/white"
-            android:text="descripcion"
-            android:background="@android:color/black"
-            android:padding="15dp"/>
+
+
+
+        </LinearLayout>
+
 
 
     </LinearLayout>

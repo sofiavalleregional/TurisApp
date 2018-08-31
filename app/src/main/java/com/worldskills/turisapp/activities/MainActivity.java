@@ -23,6 +23,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.worldskills.turisapp.R;
 import com.worldskills.turisapp.fragments.DetalleFragment;
@@ -158,6 +159,7 @@ public class MainActivity extends AppCompatActivity
         datos.putInt(FRAG_ACTIVO,fragActivo);
         datos.putString(CATEGORIA,categoria);
         datos.putBoolean(VISTA,vista);
+        datos.putInt(ITEM_PRECIONADO,itemPresionado);
 
         frag.setArguments(datos);
 
@@ -184,8 +186,6 @@ public class MainActivity extends AppCompatActivity
         }else{
             transicion.replace(R.id.contenedor_fragment_1, frag);
         }
-
-
 
 
         transicion.commit();
@@ -240,6 +240,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void itemPrecionado(int item) {
         itemPresionado=item;
+        Toast.makeText(this,itemPresionado+"",Toast.LENGTH_LONG).show();
         iniciaFragment(2, categoria);
     }
     public void onResume(){

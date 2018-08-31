@@ -10,9 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import com.squareup.picasso.Picasso;
 import com.worldskills.turisapp.R;
 import com.worldskills.turisapp.activities.MainActivity;
 import com.worldskills.turisapp.modelos.ItemLugar;
@@ -53,9 +55,6 @@ public class DetalleFragment extends Fragment {
         descripcionlarga = view.findViewById(R.id.detalle_descripcion);
         titulo = view.findViewById(R.id.detalle_title);
 
-        itempresionado = 0;
-        categoria = "";
-
 
         // Se toma la actividad en la que esta la vista
         thisActivity= getActivity();
@@ -64,7 +63,10 @@ public class DetalleFragment extends Fragment {
         if(getArguments()!=null){
             itempresionado=getArguments().getInt(MainActivity.ITEM_PRECIONADO);
             categoria= getArguments().getString(MainActivity.CATEGORIA);
+
+            //Toast.makeText(getActivity(),itempresionado+"",Toast.LENGTH_LONG).show();
         }
+
 
         // Se comprueba de que la actividad haya sido asignada y no este vacia para poder consumir los recursoos
         if(thisActivity!=null && isAdded())consumeDatos();
@@ -83,6 +85,7 @@ public class DetalleFragment extends Fragment {
         ServicioWeb servicio = retrofit.create(ServicioWeb.class);
 
         Call<List<ItemLugar>> res;
+
         if(categoria.equalsIgnoreCase("sitios")){
            res= servicio.getSitios();
         } else if(categoria.equalsIgnoreCase("hoteles")){
@@ -110,7 +113,8 @@ public class DetalleFragment extends Fragment {
     private void organizarInfo(List<ItemLugar> lugares) {
         ItemLugar itemLugar= lugares.get(itempresionado);
 
-        Glide.with(thisActivity).load(itemLugar.getUrlImagen()).into(foto);
+        //Glide.with(thisActivity).load(itemLugar.getUrlImagen()).into(foto);
+        Picasso.get().load(itemLugar.getUrlImagen()).fit().centerCrop().error(R.drawable.logoapp).into(foto);
         descripcionlarga.setText(itemLugar.getDescripcion());
         titulo.setText(itemLugar.getNombre());
 

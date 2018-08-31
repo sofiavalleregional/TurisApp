@@ -45,6 +45,7 @@ public class MapaActivity extends FragmentActivity implements OnMapReadyCallback
     private int fragActivo, itemPrecionado;
     private String categoria;
 
+
     private LatLng origen, destino;
 
     @Override
@@ -79,16 +80,13 @@ public class MapaActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
 
         consumeDatos();
     }
 
     public void consumeDatos() {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(getResources().getString(R.string.base_url_rutas))
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(getResources().getString(R.string.base_url_lugares))
                 .addConverterFactory(GsonConverterFactory.create()).build();
 
         ServicioWeb servicio = retrofit.create(ServicioWeb.class);
@@ -107,8 +105,11 @@ public class MapaActivity extends FragmentActivity implements OnMapReadyCallback
         res.enqueue(new Callback<List<ItemLugar>>() {
             @Override
             public void onResponse(Call<List<ItemLugar>> call, Response<List<ItemLugar>> response) {
-                if (fragActivo == 1) addMarcadores(response.body());
-                else cargaDatosRuta(response.body());
+
+
+                    if (fragActivo == 1) addMarcadores(response.body());
+                    else cargaDatosRuta(response.body());
+
             }
 
             @Override
@@ -118,19 +119,26 @@ public class MapaActivity extends FragmentActivity implements OnMapReadyCallback
         });
     }
 
-    public void addMarcadores(List<ItemLugar> lugares) {
+    public void addMarcadores(List<ItemLugar> lugaress) {
         LatLngBounds.Builder build=new LatLngBounds.Builder();
 
-        for (int i=0; i<lugares.size();i++){
-            ItemLugar lugar=lugares.get(i);
+        if (lugaress!=null) {
+            for (int i = 0; i < lugaress.size(); i++) {
+                ItemLugar lugar = lugaress.get(i);
 
-            mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
-            .title(lugar.getNombre()).position(new LatLng(lugar.getLatitud(),lugar.getLongitud())));
+                mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+                        .title(lugar.getNombre()).position(new LatLng(lugar.getLatitud(), lugar.getLongitud())));
 
-            build.include(new LatLng(lugar.getLatitud(),lugar.getLongitud()));
+                build.include(new LatLng(lugar.getLatitud(), lugar.getLongitud()));
 
+            }
+            mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(build.build(),1));
+        }else{
+            Toast.makeText(this, "null", Toast.LENGTH_SHORT).show();
         }
-        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(build.build(),1));
+
+
+
 
     }
 
@@ -153,6 +161,7 @@ public class MapaActivity extends FragmentActivity implements OnMapReadyCallback
 
             mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builders.build(),0));
 
+            creaRuta();
 
 
 

@@ -112,14 +112,7 @@ public class ListaFragment extends Fragment {
         try{
             adapterLugares.notifyDataSetChanged();
         }catch (Exception e){
-            if (getActivity()!=null && isAdded())Toast.makeText(getActivity(), "Espera mientras carga la lista", Toast.LENGTH_SHORT).show();
 
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    adapterLugares.notifyDataSetChanged();
-                }
-            },500);
         }
         clickLugar();
 

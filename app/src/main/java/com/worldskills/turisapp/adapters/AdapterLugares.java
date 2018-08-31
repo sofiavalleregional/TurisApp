@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
 import com.worldskills.turisapp.R;
 import com.worldskills.turisapp.modelos.ItemLugar;
 
@@ -64,7 +65,9 @@ public class AdapterLugares extends BaseAdapter {
 
         ItemLugar lugar=lugares.get(position);
 
-        Glide.with(context).load(lugar.getUrlImagen()).into(holder.imagen);
+
+        Picasso.get().load(lugar.getUrlImagen()).fit().centerCrop().error(R.drawable.logoapp).into(holder.imagen);
+       // Glide.with(context).load(lugar.getUrlImagen()).into(holder.imagen);
         holder.nombre.setText(lugar.getNombre());
         holder.ubicacion.setText(lugar.getUbicacion());
         holder.descripcion.setText(lugar.getDescripcionCorta());
