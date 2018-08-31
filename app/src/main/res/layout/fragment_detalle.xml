@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@android:color/black"
         app:cardUseCompatPadding="true"
-        android:elevation="10dp"
+        android:elevation="20dp"
         app:cardCornerRadius="15dp">
 
 
@@ -28,12 +28,14 @@
 
 
                 <ImageView
+                    android:src="@drawable/logo512x512"
                     android:id="@+id/detalle_foto"
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
-                    android:src="@mipmap/ic_launcher_round"/>
+                />
 
                 <TextView
+                    android:textColor="@android:color/white"
                     android:textSize="20dp"
                     android:textAlignment="center"
                     android:fontFamily="@font/cambriai"
@@ -43,7 +45,6 @@
 
 
                 <TextView
-
                     android:textSize="17dp"
                     android:textColor="@android:color/white"
                     android:fontFamily="@font/cambriai"

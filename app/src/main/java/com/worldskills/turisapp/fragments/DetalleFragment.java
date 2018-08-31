@@ -12,8 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
-import com.squareup.picasso.Picasso;
+
 import com.worldskills.turisapp.R;
 import com.worldskills.turisapp.activities.MainActivity;
 import com.worldskills.turisapp.modelos.ItemLugar;
@@ -115,7 +114,8 @@ public class DetalleFragment extends Fragment {
         descripcionlarga.setText(itemLugar.getDescripcion());
         titulo.setText(itemLugar.getNombre());
 
-       // Picasso.get().load(itemLugar.getUrlImagen()).centerCrop().error(R.drawable.logoapp).into(foto);
+
+
     }
 
 }
