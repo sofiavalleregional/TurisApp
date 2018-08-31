@@ -9,10 +9,14 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_maps">Map</string>
 
+    <string name="descripcionApp">TurisApp es una aplicación movil de fácil manejo para tus proximos destinos,
+    esta contiene un menu desplegable donde podrás navegar por las diferentes categorias, encontrando hoteles, restaurantes y sitios
+    turisticos que podrás disfrutar. Cada lugar tiene a su disposición una descripción larga, el nombre y la ruta de su punto actual a su
+    destino, siendo así más comodo para el usuario.</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
-    <style name="base_url_lugares">http://smartgeeks.com.co/WS/</style>
+    <string name="base_url_lugares">http://smartgeeks.com.co/WS/</string>
     <string name="base_url_rutas">https://maps.googleapis.com/maps/api/directions/</string>
 </resources>

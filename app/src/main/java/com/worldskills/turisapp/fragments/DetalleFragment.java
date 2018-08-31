@@ -1,115 +1,95 @@
 package com.worldskills.turisapp.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.Gson;
 import com.worldskills.turisapp.R;
+import com.worldskills.turisapp.modelos.ItemLugar;
+import com.worldskills.turisapp.servicios.ServicioWeb;
 
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link DetalleFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link DetalleFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class DetalleFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
-
+    private int itempresionado;
+    private String categoria;
+    private Activity thisActivity;
     public DetalleFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment DetalleFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static DetalleFragment newInstance(String param1, String param2) {
-        DetalleFragment fragment = new DetalleFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-
-
-
-
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_detalle, container, false);
+
+        View view= inflater.inflate(R.layout.fragment_detalle, container, false);
+
+        itempresionado=0;
+        categoria="";
+
+        thisActivity= getActivity();
+
+        if(getArguments()!=null){
+            itempresionado=getArguments().getInt("ITEM");
+            categoria= getArguments().getString("CATEGORIA");
+        }
+
+        if(thisActivity!=null && isAdded())consumeDatos();
+
+        return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+    public void consumeDatos(){
+        Retrofit retrofit= new Retrofit.Builder().baseUrl(getResources().getString(R.string.base_url_lugares)).addConverterFactory(GsonConverterFactory
+        .create()).build();
+
+        ServicioWeb servicio = retrofit.create(ServicioWeb.class);
+
+        Call<List<ItemLugar>> res;
+        if(categoria.equalsIgnoreCase("sitios")){
+           res= servicio.getSitios();
+        } else if(categoria.equalsIgnoreCase("hoteles")){
+           res= servicio.getHoteles();
+        } else{
+             res = servicio.getRestaurantes();
+        }
+
+        res.enqueue(new Callback<List<ItemLugar>>() {
+            @Override
+            public void onResponse(Call<List<ItemLugar>> call, Response<List<ItemLugar>> response) {
+                organizarInfo(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<ItemLugar>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void organizarInfo(List<ItemLugar> lugares) {
+        ItemLugar itemLugar= lugares.get(itempresionado);
+
+        for (int i =0; i<itemLugar.getUrlImagen().length(); i++){
+
         }
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
 }
