@@ -3,6 +3,7 @@ package com.worldskills.turisapp.activities;
 import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
@@ -74,7 +75,8 @@ public class MainActivity extends AppCompatActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
 
-
+        menuItem=menu.getItem(R.id.acction_vista);
+        actualizaPantalla();
         return true;
     }
 
@@ -87,10 +89,18 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            finish();
         }else if(id==R.id.acction_vista){
-            return true;
+
+            if (vista){
+                menuItem.setIcon(R.drawable.icon_lista);
+                vista=false;
+            }else{
+                menuItem.setIcon(R.drawable.icon_grid);
+                vista=true;
+            }
         }
+        iniciaFragment(fragActivo,categoria);
 
         return super.onOptionsItemSelected(item);
     }
@@ -102,12 +112,15 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_inicio) {
-
+            iniciaFragment(0,"inicio");
         } else if (id == R.id.nav_sitios) {
+            iniciaFragment(1,"sitios");
 
         } else if (id == R.id.nav_hoteles) {
+            iniciaFragment(1,"hoteles");
 
         } else if (id == R.id.nav_restaurantes) {
+            iniciaFragment(1,"restaurantes");
 
         }
 
@@ -183,6 +196,13 @@ public class MainActivity extends AppCompatActivity
         itemPresionado=datos.getInt(ITEM_PRECIONADO,0);
         fragActivo=datos.getInt(FRAG_ACTIVO,0);
         categoria=datos.getString(CATEGORIA,"sitios");
+
+        if (getResources().getConfiguration().orientation== Configuration.ORIENTATION_LANDSCAPE && fragActivo==2){
+            iniciaFragment(1,categoria);
+        }else{
+            iniciaFragment(fragActivo,categoria);
+        }
+
 
     }
 

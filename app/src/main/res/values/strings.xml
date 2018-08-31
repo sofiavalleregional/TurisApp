@@ -14,5 +14,6 @@
 
 
     <style name="base_url_lugares">http://smartgeeks.com.co/WS/</style>
+
     <string name="base_url_rutas">https://maps.googleapis.com/maps/api/directions/</string>
 </resources>
