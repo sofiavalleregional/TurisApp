@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import com.worldskills.turisapp.R;
 import com.worldskills.turisapp.activities.MainActivity;
 
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -39,7 +42,8 @@ public class ListaFragment extends Fragment {
     }
 
     public void consumeDatos(){
-
+        //Retrofit retrofit=new Retrofit.Builder().baseUrl(getResources().getString(""))
+         //       .addConverterFactory(GsonConverterFactory.create()).build();
     }
 
 }
