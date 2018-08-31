@@ -22,9 +22,12 @@ import android.view.MenuItem;
 import android.widget.LinearLayout;
 
 import com.worldskills.turisapp.R;
+import com.worldskills.turisapp.fragments.DetalleFragment;
+import com.worldskills.turisapp.fragments.ListaFragment;
+import com.worldskills.turisapp.interfaces.ComunicaFragment;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, ComunicaFragment {
 
     private int fragActivo, itemPresionado;
     private boolean vista;
@@ -75,7 +78,7 @@ public class MainActivity extends AppCompatActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
 
-        menuItem=menu.getItem(R.id.acction_vista);
+        menuItem=menu.findItem(R.id.acction_vista);
         actualizaPantalla();
         return true;
     }
@@ -175,17 +178,57 @@ public class MainActivity extends AppCompatActivity
 
         transicion.commit();
 
+        actualizaPantalla();
+
 
     }
     public void actualizaPantalla(){
+
+
+        switch (fragActivo){
+            case 0:
+                try{
+                    menuItem.setVisible(false);
+                }catch (Exception e){}
+
+                fab.setVisibility(View.INVISIBLE);
+                toolbar.setTitle("Inicio");
+
+                break;
+            case 1:
+                try{
+                    menuItem.setVisible(true);
+                }catch (Exception e){}
+                fab.setVisibility(View.VISIBLE);
+                fab.setImageResource(R.drawable.icon_marker);
+                toolbar.setTitle(categoria);
+                break;
+            case 2:
+                try{
+                    menuItem.setVisible(false);
+                }catch (Exception e){}
+                fab.setVisibility(View.VISIBLE);
+                fab.setImageResource(R.drawable.icon_car);
+                toolbar.setTitle("Detalle");
+                break;
+        }
+        if (getResources().getConfiguration().orientation==Configuration.ORIENTATION_LANDSCAPE){
+            if (menuItem!=null)menuItem.setVisible(false);
+        }
 
     }
     public Fragment getFrament(int frag){
         switch (frag){
             case 0: return new Fragment();
-            case 1: return new Fragment();
-            default: return new Fragment();
+            case 1: return new ListaFragment();
+            default: return new DetalleFragment();
         }
+    }
+
+    @Override
+    public void itemPrecionado(int item) {
+        itemPresionado=item;
+        iniciaFragment(2, categoria);
     }
     public void onResume(){
         super.onResume();
@@ -225,4 +268,6 @@ public class MainActivity extends AppCompatActivity
         guarda.apply();
 
     }
+
+
 }
