@@ -7,7 +7,7 @@ import retrofit2.http.GET;
 
 public class ItemLugar {
 
-
+// MODELADO DEL OBJETO QUE REPRESENTA CADA LUGAR
     @SerializedName("id")
     @Expose
     private int ID;

@@ -25,7 +25,7 @@ public class SplashActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
 
-
+// se instancian las animaciones y se cargan apenas inicien el splash. Luego con un hilo se termina la actividad para iniciar el navegador
         Animation animacion= AnimationUtils.loadAnimation(this, R.anim.aparece);
         animacion.setFillAfter(true);
         ImageView imagen_logo = findViewById(R.id.logo_splash);
@@ -43,6 +43,9 @@ public class SplashActivity extends AppCompatActivity {
 
 
     }
+
+
+
     public void onPause(){
         super.onPause();
 

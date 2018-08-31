@@ -15,6 +15,7 @@ import retrofit2.http.Query;
 //Esta interfaz se encarga de hacer los diferentes pedidos a los servicios web, ya se para los lugares o las rutas
 public interface ServicioWeb {
 
+
     @GET("webserviceturisappsitios.php")
     Call<List<ItemLugar>> getSitios();
 
