@@ -8,40 +8,40 @@ import retrofit2.http.GET;
 public class ItemLugar {
 
 
-    @SerializedName("")
+    @SerializedName("id")
     @Expose
     private int id;
 
-    @SerializedName("")
+    @SerializedName("Nombre")
     @Expose
     private String nombre;
 
-    @SerializedName("")
+    @SerializedName("ubicacion")
     @Expose
     private String ubicacion;
 
-    @SerializedName("")
+    @SerializedName("descripcioncorta")
     @Expose
     private String descripcionCorta;
 
-    @SerializedName("")
+    @SerializedName("descripcion")
     @Expose
     private String descripcion;
 
-    @SerializedName("")
+    @SerializedName("urlimagen")
     @Expose
     private String urlImagen;
 
-    @SerializedName("")
+    @SerializedName("longitud")
     @Expose
     private double longitud;
 
-    @SerializedName("")
+    @SerializedName("latitud")
     @Expose
     private double latitud;
 
 
-    @SerializedName("")
+    @SerializedName("tipolugar")
     @Expose
     private String tipoLugar;
 
