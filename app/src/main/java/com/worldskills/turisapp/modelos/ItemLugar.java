@@ -10,7 +10,7 @@ public class ItemLugar {
 
     @SerializedName("id")
     @Expose
-    private int id;
+    private int ID;
 
     @SerializedName("Nombre")
     @Expose
@@ -45,12 +45,14 @@ public class ItemLugar {
     @Expose
     private String tipoLugar;
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
+    //AAA
+    public int getID() {
+        return ID;
+    }
+    //BBB
+    public void setID(int id) {
+        this.ID = id;
     }
 
     public String getNombre() {
