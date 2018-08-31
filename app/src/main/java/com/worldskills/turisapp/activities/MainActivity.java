@@ -1,6 +1,7 @@
 package com.worldskills.turisapp.activities;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -23,6 +24,7 @@ import android.widget.LinearLayout;
 
 import com.worldskills.turisapp.R;
 import com.worldskills.turisapp.fragments.DetalleFragment;
+import com.worldskills.turisapp.fragments.InicioFragment;
 import com.worldskills.turisapp.fragments.ListaFragment;
 import com.worldskills.turisapp.interfaces.ComunicaFragment;
 
@@ -48,8 +50,12 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent=new Intent(getApplicationContext(), MapsActivity.class);
+                intent.putExtra(MainActivity.FRAG_ACTIVO,fragActivo);
+                intent.putExtra(MainActivity.CATEGORIA,categoria);
+                intent.putExtra(MainActivity.ITEM_PRECIONADO,itemPresionado);
+                startActivity(intent);
+
             }
         });
 
@@ -68,7 +74,9 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        } else if(fragActivo==2) {
+            iniciaFragment(1,categoria);
+        }else{
             super.onBackPressed();
         }
     }
@@ -219,7 +227,7 @@ public class MainActivity extends AppCompatActivity
     }
     public Fragment getFrament(int frag){
         switch (frag){
-            case 0: return new Fragment();
+            case 0: return new InicioFragment();
             case 1: return new ListaFragment();
             default: return new DetalleFragment();
         }

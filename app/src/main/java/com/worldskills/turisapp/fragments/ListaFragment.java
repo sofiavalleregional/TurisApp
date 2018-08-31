@@ -4,11 +4,13 @@ package com.worldskills.turisapp.fragments;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.worldskills.turisapp.R;
 import com.worldskills.turisapp.activities.MainActivity;
@@ -94,17 +96,31 @@ public class ListaFragment extends Fragment {
         try{
             if (getActivity().getResources().getConfiguration().orientation== Configuration.ORIENTATION_LANDSCAPE){
                 adapterLugares=new AdapterLugares(getActivity(),R.layout.item_lugar_list_land,lugares);
+                gridView.setNumColumns(1);
             }else if (vista){
                 adapterLugares=new AdapterLugares(getActivity(),R.layout.item_lugar_list,lugares);
+                gridView.setNumColumns(1);
             }else{
                 adapterLugares=new AdapterLugares(getActivity(),R.layout.item_lugar_grid,lugares);
+                gridView.setNumColumns(2);
             }
             gridView.setAdapter(adapterLugares);
 
 
         }catch (Exception e){}
 
-        if (adapterLugares!=null) adapterLugares.notifyDataSetChanged();
+        try{
+            adapterLugares.notifyDataSetChanged();
+        }catch (Exception e){
+            if (getActivity()!=null && isAdded())Toast.makeText(getActivity(), "Espera mientras carga la lista", Toast.LENGTH_SHORT).show();
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    adapterLugares.notifyDataSetChanged();
+                }
+            },500);
+        }
         clickLugar();
 
     }
