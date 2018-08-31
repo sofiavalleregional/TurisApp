@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 
 import com.worldskills.turisapp.R;
 
+import retrofit2.http.GET;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -50,6 +52,10 @@ public class DetalleFragment extends Fragment {
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
+
+
+
+
     }
 
     @Override
