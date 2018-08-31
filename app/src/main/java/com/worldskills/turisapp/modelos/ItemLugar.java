@@ -1,23 +1,48 @@
 package com.worldskills.turisapp.modelos;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import retrofit2.http.GET;
+
 public class ItemLugar {
 
+
+    @SerializedName("id")
+    @Expose
     private int id;
 
+    @SerializedName("Nombre")
+    @Expose
     private String nombre;
 
+    @SerializedName("ubicacion")
+    @Expose
     private String ubicacion;
 
+    @SerializedName("descripcioncorta")
+    @Expose
     private String descripcionCorta;
 
+    @SerializedName("descripcion")
+    @Expose
     private String descripcion;
 
+    @SerializedName("urlimagen")
+    @Expose
     private String urlImagen;
 
+    @SerializedName("longitud")
+    @Expose
     private double longitud;
 
+    @SerializedName("latitud")
+    @Expose
     private double latitud;
 
+
+    @SerializedName("tipolugar")
+    @Expose
     private String tipoLugar;
 
     public int getId() {
