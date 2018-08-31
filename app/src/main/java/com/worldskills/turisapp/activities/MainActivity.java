@@ -1,5 +1,6 @@
 package com.worldskills.turisapp.activities;
 
+import android.Manifest;
 import android.app.Fragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,6 +12,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -46,11 +48,13 @@ public class MainActivity extends AppCompatActivity
          toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        permisos();
+
          fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getApplicationContext(), MapsActivity.class);
+                Intent intent=new Intent(getApplicationContext(), MapaActivity.class);
                 intent.putExtra(MainActivity.FRAG_ACTIVO,fragActivo);
                 intent.putExtra(MainActivity.CATEGORIA,categoria);
                 intent.putExtra(MainActivity.ITEM_PRECIONADO,itemPresionado);
@@ -277,5 +281,11 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    public void permisos()
+    {
+        ActivityCompat.requestPermissions(this,new String[]{
+                Manifest.permission.INTERNET,
+                Manifest.permission.ACCESS_COARSE_LOCATION},12);
+    }
 
 }
