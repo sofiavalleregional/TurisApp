@@ -45,6 +45,7 @@
                 <TextView
 
                     android:textSize="17dp"
+                    android:textColor="@android:color/white"
                     android:fontFamily="@font/cambriai"
                     android:id="@+id/detalle_descripcion"
                     android:layout_width="match_parent"

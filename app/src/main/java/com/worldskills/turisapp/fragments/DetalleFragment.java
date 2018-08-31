@@ -75,7 +75,7 @@ public class DetalleFragment extends Fragment {
     // Se crea el objeto de retrofit para construirlo con la base de url que se tiene para consumir el servicio, se convierte a un gson y se crea
     // Luego se instancia la clase de servicios y se crea con el retrofit mandandole la clase.
     // En la llamada de lista de objeto lugar se uso condicional para saber cual fue la categoria que se mando y asi cargar el servicio correspondiente-
-    // se hace el el call back a la respuesta y se inicia el metodo de organizar
+    // se hace el el call back a la respuesta y se inicia el metodo de organizar informacion y se le envia la lista obtenida del servicio.
     public void consumeDatos(){
         Retrofit retrofit= new Retrofit.Builder().baseUrl(getResources().getString(R.string.base_url_lugares)).addConverterFactory(GsonConverterFactory
         .create()).build();
@@ -104,6 +104,9 @@ public class DetalleFragment extends Fragment {
         });
     }
 
+
+
+    // Metodo donde se instancia el objeto de representación de lugar, y se envian los parametros a mostrar.
     private void organizarInfo(List<ItemLugar> lugares) {
         ItemLugar itemLugar= lugares.get(itempresionado);
 
