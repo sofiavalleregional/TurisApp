@@ -3,12 +3,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.DetalleFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@android:color/black"
+        app:cardUseCompatPadding="true"
+        android:elevation="10dp"
+        app:cardCornerRadius="15dp">
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="match_parent">
+
+
+                <ImageView
+                    android:id="@+id/detalle_foto"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:src="@mipmap/ic_launcher_round"/>
+
+                <TextView
+                    android:textSize="20dp"
+                    android:textAlignment="center"
+                    android:fontFamily="@font/cambriai"
+                    android:id="@+id/detalle_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+
+                <TextView
+
+                    android:textSize="17dp"
+                    android:fontFamily="@font/cambriai"
+                    android:id="@+id/detalle_descripcion"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+        </ScrollView>
+
+    </android.support.v7.widget.CardView>
 
 </FrameLayout>

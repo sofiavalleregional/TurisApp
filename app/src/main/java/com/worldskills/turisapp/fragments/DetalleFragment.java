@@ -8,7 +8,10 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.worldskills.turisapp.R;
 import com.worldskills.turisapp.modelos.ItemLugar;
@@ -29,6 +32,8 @@ public class DetalleFragment extends Fragment {
     private int itempresionado;
     private String categoria;
     private Activity thisActivity;
+    private ImageView foto;
+    private TextView descripcionlarga, titulo;
     public DetalleFragment() {
         // Required empty public constructor
     }
@@ -39,6 +44,10 @@ public class DetalleFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view= inflater.inflate(R.layout.fragment_detalle, container, false);
+
+        foto= view.findViewById(R.id.detalle_foto);
+        descripcionlarga= view.findViewById(R.id.detalle_descripcion);
+        titulo= view.findViewById(R.id.detalle_title);
 
         itempresionado=0;
         categoria="";
@@ -86,9 +95,10 @@ public class DetalleFragment extends Fragment {
     private void organizarInfo(List<ItemLugar> lugares) {
         ItemLugar itemLugar= lugares.get(itempresionado);
 
-        for (int i =0; i<itemLugar.getUrlImagen().length(); i++){
+        Glide.with(thisActivity).load(itemLugar.getUrlImagen()).into(foto);
+        descripcionlarga.setText(itemLugar.getDescripcion());
+        titulo.setText(itemLugar.getNombre());
 
-        }
     }
 
 
