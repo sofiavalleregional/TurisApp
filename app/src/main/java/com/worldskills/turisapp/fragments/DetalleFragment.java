@@ -111,11 +111,11 @@ public class DetalleFragment extends Fragment {
     private void organizarInfo(List<ItemLugar> lugares) {
         ItemLugar itemLugar= lugares.get(itempresionado);
 
-   //     Glide.with(thisActivity).load(itemLugar.getUrlImagen()).into(foto);
+        Glide.with(thisActivity).load(itemLugar.getUrlImagen()).into(foto);
         descripcionlarga.setText(itemLugar.getDescripcion());
         titulo.setText(itemLugar.getNombre());
 
-        Picasso.get().load(itemLugar.getUrlImagen()).centerCrop().error(R.drawable.logoapp).into(foto);
+       // Picasso.get().load(itemLugar.getUrlImagen()).centerCrop().error(R.drawable.logoapp).into(foto);
     }
 
 }

@@ -6,6 +6,9 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.worldskills.turisapp.R;
@@ -16,6 +19,13 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+
+        Animation animacion= AnimationUtils.loadAnimation(this, R.anim.aparece);
+        animacion.setFillAfter(true);
+        ImageView imagen_logo = findViewById(R.id.logo_splash);
+
+        imagen_logo.startAnimation(animacion);
 
         new Handler().postDelayed(new Runnable() {
             @Override
