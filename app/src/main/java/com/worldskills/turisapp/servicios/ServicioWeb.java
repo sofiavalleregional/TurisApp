@@ -5,6 +5,8 @@ package com.worldskills.turisapp.servicios;
 
 import com.worldskills.turisapp.modelos.ItemLugar;
 
+import java.util.List;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -14,13 +16,13 @@ import retrofit2.http.Query;
 public interface ServicioWeb {
 
     @GET("webserviceturisappsitios.php")
-    Call<ItemLugar> getSitios();
+    Call<List<ItemLugar>> getSitios();
 
     @GET("webserviceturisapphoteles.php")
-    Call<ItemLugar> getHoteles();
+    Call<List<ItemLugar>> getHoteles();
 
     @GET("webserviceturisappsres.php")
-    Call<ItemLugar> getRestaurantes();
+    Call<List<ItemLugar>> getRestaurantes();
 
     @GET("json")
     Call<ResponseBody> getRutas(@Query("origin") String origen, @Query("destination") String destination);

@@ -1,10 +1,14 @@
 package com.worldskills.turisapp.activities;
 
+import android.app.Fragment;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 
 import com.worldskills.turisapp.R;
 
@@ -111,6 +116,64 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    /*Este metodo recibe dos parametro, el primero sirve para ver que fragment se activo, y el segundo para ver en que categoria se encuentra*/
+    public void iniciaFragment(int fragAct, String cate){
+        fragActivo=fragAct;
+        categoria=cate;
+
+        FragmentManager manager=getFragmentManager();
+        FragmentTransaction transicion=manager.beginTransaction();
+
+        Fragment frag=getFrament(fragActivo);
+
+        Bundle datos=new Bundle();
+        datos.putInt(FRAG_ACTIVO,fragActivo);
+        datos.putString(CATEGORIA,categoria);
+        datos.putBoolean(VISTA,vista);
+
+        frag.setArguments(datos);
+
+        if (getResources().getConfiguration().orientation== Configuration.ORIENTATION_LANDSCAPE){
+            LinearLayout layoutFrag1=findViewById(R.id.contenedor_fragment_1);
+
+            switch (fragActivo){
+                case 0:
+                    layoutFrag1.getLayoutParams().width=getResources().getDisplayMetrics().widthPixels;
+                    transicion.replace(R.id.contenedor_fragment_1,frag);
+
+                    break;
+                case 1:
+                    layoutFrag1.getLayoutParams().width=(int)(getResources().getDisplayMetrics().widthPixels/2.5);
+                    transicion.replace(R.id.contenedor_fragment_1,frag);
+                    itemPresionado=0;
+                    iniciaFragment(2,categoria);
+                    break;
+                case 2:
+                    transicion.replace(R.id.contenedor_fragment_2,frag);
+                    break;
+            }
+
+        }else{
+            transicion.replace(R.id.contenedor_fragment_1, frag);
+        }
+
+
+
+
+        transicion.commit();
+
+
+    }
+    public void actualizaPantalla(){
+
+    }
+    public Fragment getFrament(int frag){
+        switch (frag){
+            case 0: return new Fragment();
+            case 1: return new Fragment();
+            default: return new Fragment();
+        }
+    }
     public void onResume(){
         super.onResume();
         SharedPreferences datos= PreferenceManager.getDefaultSharedPreferences(this);
