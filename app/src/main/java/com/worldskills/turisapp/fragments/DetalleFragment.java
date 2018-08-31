@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.worldskills.turisapp.R;
+import com.worldskills.turisapp.activities.MainActivity;
 import com.worldskills.turisapp.modelos.ItemLugar;
 import com.worldskills.turisapp.servicios.ServicioWeb;
 
@@ -43,27 +44,38 @@ public class DetalleFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view= inflater.inflate(R.layout.fragment_detalle, container, false);
 
-        foto= view.findViewById(R.id.detalle_foto);
-        descripcionlarga= view.findViewById(R.id.detalle_descripcion);
-        titulo= view.findViewById(R.id.detalle_title);
+        // Inflo la vista del fragment para mas adelante buscar los componentes y poder mandarles acciones.
+        View view = inflater.inflate(R.layout.fragment_detalle, container, false);
 
-        itempresionado=0;
-        categoria="";
 
+        foto = view.findViewById(R.id.detalle_foto);
+        descripcionlarga = view.findViewById(R.id.detalle_descripcion);
+        titulo = view.findViewById(R.id.detalle_title);
+
+        itempresionado = 0;
+        categoria = "";
+
+
+        // Se toma la actividad en la que esta la vista
         thisActivity= getActivity();
 
+        // se comprueba de que los arguemtnos no lleguen vacios, y entran a definirse por unas keys constantes en la clase MAIN ACTIVITY
         if(getArguments()!=null){
-            itempresionado=getArguments().getInt("ITEM");
-            categoria= getArguments().getString("CATEGORIA");
+            itempresionado=getArguments().getInt(MainActivity.ITEM_PRECIONADO);
+            categoria= getArguments().getString(MainActivity.CATEGORIA);
         }
 
+        // Se comprueba de que la actividad haya sido asignada y no este vacia para poder consumir los recursoos
         if(thisActivity!=null && isAdded())consumeDatos();
 
         return view;
     }
 
+    // Se crea el objeto de retrofit para construirlo con la base de url que se tiene para consumir el servicio, se convierte a un gson y se crea
+    // Luego se instancia la clase de servicios y se crea con el retrofit mandandole la clase.
+    // En la llamada de lista de objeto lugar se uso condicional para saber cual fue la categoria que se mando y asi cargar el servicio correspondiente-
+    // se hace el el call back a la respuesta y se inicia el metodo de organizar
     public void consumeDatos(){
         Retrofit retrofit= new Retrofit.Builder().baseUrl(getResources().getString(R.string.base_url_lugares)).addConverterFactory(GsonConverterFactory
         .create()).build();
@@ -100,6 +112,5 @@ public class DetalleFragment extends Fragment {
         titulo.setText(itemLugar.getNombre());
 
     }
-
 
 }
