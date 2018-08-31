@@ -1,6 +1,8 @@
 package com.worldskills.turisapp.activities;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -18,14 +20,22 @@ import com.worldskills.turisapp.R;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private int fragActivo, itemPresionado;
+    private boolean vista;
+    private String categoria;
+
+    private FloatingActionButton fab;
+    private Toolbar toolbar;
+    private MenuItem menuItem;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,6 +68,8 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+
+
         return true;
     }
 
@@ -70,6 +82,8 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }else if(id==R.id.acction_vista){
             return true;
         }
 
@@ -95,5 +109,37 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void onResume(){
+        super.onResume();
+        SharedPreferences datos= PreferenceManager.getDefaultSharedPreferences(this);
+
+        //deeee
+        vista=datos.getBoolean(VISTA,false);
+        itemPresionado=datos.getInt(ITEM_PRECIONADO,0);
+        fragActivo=datos.getInt(FRAG_ACTIVO,0);
+        categoria=datos.getString(CATEGORIA,"sitios");
+
+    }
+
+    public static final String VISTA="VISTA";
+    public static final String FRAG_ACTIVO="FRAG_ACTI";
+    public static final String ITEM_PRECIONADO="ITEM_P";
+    public static final String CATEGORIA="CATEGORIA";
+
+
+    public void onPause(){
+        super.onPause();
+        SharedPreferences datos= PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor guarda=datos.edit();
+
+        guarda.putBoolean(VISTA,vista);
+        guarda.putString(CATEGORIA, categoria);
+        guarda.putInt(FRAG_ACTIVO, fragActivo);
+        guarda.putInt(ITEM_PRECIONADO, itemPresionado);
+
+        guarda.apply();
+
     }
 }
