@@ -48,6 +48,10 @@ public class AdapterLugares extends BaseAdapter {
         View row=convertView;
         Holder holder=new Holder();
 
+
+        // Se verifica que la vista sea nula y luego se infla pasandole como parametro la plantilla que va a visualizar el el adapter.
+        // Con la vista obtenida se buscan por medio de la clase holder y se instancian los elemtos, luego se instancia el objeto y se le envian los
+        // parametros a mostrar.
         if (row==null){
             LayoutInflater inflater=(LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
             row=inflater.inflate(layoutItem,null);
@@ -75,6 +79,8 @@ public class AdapterLugares extends BaseAdapter {
         return row;
     }
 
+
+    // La creacion de la clase que va a tener los componentes del item para enviarlos e instanciarlos en el adapter.
     class Holder {
         ImageView imagen;
         TextView nombre, ubicacion, descripcion;
